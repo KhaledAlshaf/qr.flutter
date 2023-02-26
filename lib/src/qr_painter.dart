@@ -5,12 +5,10 @@
  */
 
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:qr/qr.dart';
 
 import 'errors.dart';
@@ -36,6 +34,7 @@ class QrPainter extends CustomPainter {
     this.color = _qrDefaultColor,
     this.emptyColor,
     this.gapless = false,
+    this.backGroundColor = const Color(0xFFFFFFFF),
     this.embeddedImage,
     this.embeddedImageStyle,
     this.eyeStyle = const QrEyeStyle(
@@ -60,6 +59,7 @@ class QrPainter extends CustomPainter {
     this.gapless = false,
     this.embeddedImage,
     this.embeddedImageStyle,
+    this.backGroundColor = const Color(0xFFFFFFFF),
     this.eyeStyle = const QrEyeStyle(
       eyeShape: QrEyeShape.square,
       color: Color(0xFF000000),
@@ -92,6 +92,9 @@ class QrPainter extends CustomPainter {
   /// If set to false, the painter will leave a 1px gap between each of the
   /// squares.
   final bool gapless;
+
+  /// Background color
+  final Color backGroundColor;
 
   /// The image data to embed (as an overlay) in the QR code. The image will
   /// be added to the center of the QR code.
@@ -176,7 +179,7 @@ class QrPainter extends CustomPainter {
     }
 
     final backgroundPaint = Paint()
-      ..color = Color(0xFFFFFFFF)
+      ..color = backGroundColor
       ..style = PaintingStyle.fill;
     canvas.drawRect(
         Rect.fromLTWH(0, 0, size.width, size.height), backgroundPaint);
